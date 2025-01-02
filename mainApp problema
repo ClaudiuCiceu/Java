@@ -1,0 +1,158 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package Problema;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class MainApp {
+    static float n;
+
+    public MainApp() throws FileNotFoundException {
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        List<Animal> animale = new ArrayList();
+        Scanner scanner = new Scanner(new File("src/main/resources/animale.csv"));
+
+        while(scanner.hasNext()) {
+            String line = scanner.nextLine();
+            String[] parti = line.split(";");
+            String nume = parti[0];
+            float inaltime = Float.parseFloat(parti[1]);
+            LocalDate data_nasterii = LocalDate.parse(parti[2]);
+            talia talie = talia.valueOf(parti[3]);
+            if (parti[4].equals("caine")) {
+                boolean esteAdoptat = Boolean.parseBoolean(parti[5]);
+                Caine C = new Caine(nume, inaltime, data_nasterii, talie, esteAdoptat);
+                animale.add(C);
+            }
+
+            if (parti[4].equals("pisica")) {
+                String rasa = parti[5];
+                float greutate = Float.parseFloat(parti[6]);
+                Pisica p = new Pisica(nume, inaltime, data_nasterii, talie, greutate, rasa);
+                animale.add(p);
+            }
+        }
+
+        scanner.close();
+        Scanner scanner1 = new Scanner(System.in);
+
+        while(true) {
+            while(true) {
+                System.out.println("0.Exit");
+                System.out.println("1.Afisare totala");
+                System.out.println("2.Verificarea inaltimii primului animal = n");
+                System.out.println("3.Returnare varsta animal");
+                System.out.println("4.Ordonarea greutatii unor pisici de aceiasi rasa citita de la tastatura");
+                System.out.println("5.Afisarea detaliilor cainilor de talie MARE care au fost adoptati in ultimele n luni");
+                System.out.println("Introduceti optiunea : ");
+                int opt = scanner1.nextInt();
+                switch (opt) {
+                    case 0:
+                        System.exit(0);
+                    case 1:
+                        afisareTotala(animale);
+                        break;
+                    case 2:
+                        varsta(animale);
+                        break;
+                    case 3:
+                        afisareVarsta(animale);
+                        break;
+                    case 4:
+                        afisareOrdonataGreutate(animale);
+                        break;
+                    case 5:
+                        talieMare(animale);
+                        break;
+                    default:
+                        System.out.println("Optiune invalida!!");
+                }
+            }
+        }
+    }
+
+    public static void afisareTotala(List<Animal> animale) {
+        PrintStream var10001 = System.out;
+        Objects.requireNonNull(var10001);
+        animale.forEach(var10001::println);
+    }
+
+    public static void varsta(List<Animal> animale) {
+        Scanner scanner2 = new Scanner(System.in);
+
+        do {
+            System.out.println("Introduceti valoarea lui n");
+
+            while(!scanner2.hasNext()) {
+                System.out.println("Valoare invalida reintroduceti !!");
+                scanner2.next();
+            }
+
+            n = scanner2.nextFloat();
+        } while(n <= 0.0F);
+
+        Animal primulAnimal = (Animal)animale.get(0);
+        if (primulAnimal.getInaltime() == n) {
+            System.out.println("Primul animal " + String.valueOf(primulAnimal));
+        } else {
+            System.out.println("Nu s a gasit primul animal ");
+        }
+
+    }
+
+    public static void afisareVarsta(List<Animal> animals) {
+        Iterator var1 = animals.iterator();
+
+        while(var1.hasNext()) {
+            Animal a = (Animal)var1.next();
+            System.out.println(a);
+            a.returnareVarsta();
+        }
+
+    }
+
+    public static void afisareOrdonataGreutate(List<Animal> animale) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduceti rasa pentru care sa se ordoneze greutatea pisicilor: ");
+        String rasa = scanner.nextLine();
+        List<Pisica> pisiciFiltrate = (List)animale.stream().filter((animal) -> {
+            return animal instanceof Pisica;
+        }).map((animal) -> {
+            return (Pisica)animal;
+        }).filter((pisica) -> {
+            return pisica.getRasa().equalsIgnoreCase(rasa);
+        }).sorted(Comparator.comparingDouble(Pisica::getGreutate)).collect(Collectors.toList());
+        System.out.println("Pisicile de rasa " + rasa + " ordonate dupa greutate:");
+        PrintStream var10001 = System.out;
+        Objects.requireNonNull(var10001);
+        pisiciFiltrate.forEach(var10001::println);
+    }
+
+    public static void talieMare(List<Animal> animale) {
+        List<Caine> cainefiltrat = (List)animale.stream().filter((animal) -> {
+            return animal instanceof Caine && animal.getTalie().equals(talia.MARE) && (float)animal.getData_nasterii().getMonthValue() > n;
+        }).map((animal) -> {
+            return (Caine)animal;
+        }).filter((caine) -> {
+            return caine.isEsteAdoptat();
+        }).collect(Collectors.toList());
+        PrintStream var10001 = System.out;
+        Objects.requireNonNull(var10001);
+        cainefiltrat.forEach(var10001::println);
+    }
+}
