@@ -1,0 +1,48 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package Problema;
+
+import java.time.LocalDate;
+
+public class Pisica extends Animal {
+    private float greutate;
+    private String rasa;
+
+    public Pisica(String nume, float inaltime, LocalDate data_nasterii, talia talie, float greutate, String rasa) {
+        super(nume, inaltime, data_nasterii, talie);
+        this.greutate = greutate;
+        this.rasa = rasa;
+    }
+
+    public Pisica(float greutate, String rasa) {
+        this.greutate = greutate;
+        this.rasa = rasa;
+    }
+
+    public Pisica() {
+    }
+
+    public float getGreutate() {
+        return this.greutate;
+    }
+
+    public void setGreutate(float greutate) {
+        this.greutate = greutate;
+    }
+
+    public String getRasa() {
+        return this.rasa;
+    }
+
+    public void setRasa(String rasa) {
+        this.rasa = rasa;
+    }
+
+    public String toString() {
+        String var10000 = super.toString();
+        return var10000 + "Pisica{greutate=" + this.greutate + ", rasa='" + this.rasa + "'}";
+    }
+}
