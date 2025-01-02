@@ -1,0 +1,15 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package Problema;
+
+public enum talia {
+    MARE,
+    MEDIE,
+    MICA;
+
+    private talia() {
+    }
+}
