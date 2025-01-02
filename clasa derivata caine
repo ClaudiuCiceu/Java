@@ -1,0 +1,37 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package Problema;
+
+import java.time.LocalDate;
+
+public class Caine extends Animal {
+    private boolean esteAdoptat;
+
+    public Caine(String nume, float inaltime, LocalDate data_nasterii, talia talie, boolean esteAdoptat) {
+        super(nume, inaltime, data_nasterii, talie);
+        this.esteAdoptat = esteAdoptat;
+    }
+
+    public Caine(boolean esteAdoptat) {
+        this.esteAdoptat = esteAdoptat;
+    }
+
+    public Caine() {
+    }
+
+    public boolean isEsteAdoptat() {
+        return this.esteAdoptat;
+    }
+
+    public void setEsteAdoptat(boolean esteAdoptat) {
+        this.esteAdoptat = esteAdoptat;
+    }
+
+    public String toString() {
+        String var10000 = super.toString();
+        return var10000 + "Caine{esteAdoptat=" + this.esteAdoptat + "}";
+    }
+}
